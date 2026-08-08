@@ -96,3 +96,16 @@ All unit tests mock the `ITicketRepository` layer to ensure zero database connec
 ```bash
 cd HelpDesk.Api
 dotnet run
+---
+
+###2. Run MVC Application
+cd HelpDesk.Mvc
+dotnet run
+
+----
+
+###3. Execute Automated Tests
+cd HelpDesk.Tests
+dotnet test
+----
+
