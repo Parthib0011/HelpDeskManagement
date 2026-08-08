@@ -1,0 +1,72 @@
+@model HelpDesk.Mvc.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Help Desk Dashboard";
+}
+
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="fw-bold mb-1"><i class="fa-solid fa-gauge-high me-2 text-primary"></i>Help Desk Overview</h2>
+            <p class="text-muted">Real-time status of support tickets across the system.</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary-custom">
+            <i class="fa-solid fa-plus me-1"></i> Raise New Ticket
+        </a>
+    </div>
+</div>
+
+<!-- Metrics Summary Cards -->
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="stat-title">Total Tickets</span>
+                <i class="fa-solid fa-ticket fa-xl text-primary"></i>
+            </div>
+            <div class="stat-value text-white">@Model.TotalTickets</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="border-top: 3px solid #3b82f6;">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="stat-title">Open Tickets</span>
+                <i class="fa-solid fa-folder-open fa-xl text-info"></i>
+            </div>
+            <div class="stat-value text-info">@Model.OpenTickets</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="border-top: 3px solid #f59e0b;">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="stat-title">In Progress</span>
+                <i class="fa-solid fa-spinner fa-xl text-warning"></i>
+            </div>
+            <div class="stat-value text-warning">@Model.InProgressTickets</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card" style="border-top: 3px solid #10b981;">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="stat-title">Closed Tickets</span>
+                <i class="fa-solid fa-circle-check fa-xl text-success"></i>
+            </div>
+            <div class="stat-value text-success">@Model.ClosedTickets</div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Navigation Links -->
+<div class="glass-panel p-4">
+    <h4 class="fw-bold mb-3"><i class="fa-solid fa-bolt me-2 text-warning"></i>Quick Actions</h4>
+    <div class="d-flex gap-3 flex-wrap">
+        <a asp-action="Index" class="btn btn-secondary-custom">
+            <i class="fa-solid fa-list me-1"></i> View All Tickets (@Model.TotalTickets)
+        </a>
+        <a asp-action="Index" asp-route-status="Open" class="btn btn-secondary-custom">
+            <i class="fa-solid fa-folder-open me-1 text-info"></i> View Open Tickets (@Model.OpenTickets)
+        </a>
+        <a asp-action="Index" asp-route-status="Closed" class="btn btn-secondary-custom">
+            <i class="fa-solid fa-circle-check me-1 text-success"></i> View Closed Tickets (@Model.ClosedTickets)
+        </a>
+    </div>
+</div>
