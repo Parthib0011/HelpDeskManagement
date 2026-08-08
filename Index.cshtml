@@ -1,0 +1,127 @@
+@model IEnumerable<HelpDesk.Mvc.Models.TicketViewModel>
+@{
+    ViewData["Title"] = "All Support Tickets";
+    string selectedStatus = ViewBag.SelectedStatus as string ?? "All";
+}
+
+<div class="row mb-4 align-items-center">
+    <div class="col-md-6">
+        <h2 class="fw-bold mb-1"><i class="fa-solid fa-list-check me-2 text-primary"></i>Support Tickets</h2>
+        <p class="text-muted mb-0">Browse, filter, and manage tickets.</p>
+    </div>
+    <div class="col-md-6 text-md-end mt-3 mt-md-0">
+        <a asp-action="Create" class="btn btn-primary-custom">
+            <i class="fa-solid fa-plus me-1"></i> Raise New Ticket
+        </a>
+    </div>
+</div>
+
+<!-- Filter Section -->
+<div class="glass-panel mb-4 p-3">
+    <form asp-action="Index" method="get" class="row g-3 align-items-center">
+        <div class="col-auto">
+            <label for="status" class="col-form-label fw-semibold text-muted">
+                <i class="fa-solid fa-filter me-1 text-primary"></i>Filter by Status:
+            </label>
+        </div>
+        <div class="col-auto">
+            <select name="status" id="status" class="form-select" onchange="this.form.submit()">
+                <option value="All" selected="@(selectedStatus == "All")">-- All Statuses --</option>
+                <option value="Open" selected="@(selectedStatus == "Open")">Open</option>
+                <option value="In Progress" selected="@(selectedStatus == "In Progress")">In Progress</option>
+                <option value="Closed" selected="@(selectedStatus == "Closed")">Closed</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-secondary-custom">Apply Filter</button>
+            @if (selectedStatus != "All")
+            {
+                <a asp-action="Index" class="btn btn-outline-light ms-1">Clear Filter</a>
+            }
+        </div>
+    </form>
+</div>
+
+<!-- Tickets Table -->
+<div class="glass-panel p-0 overflow-hidden">
+    @if (!Model.Any())
+    {
+        <div class="p-5 text-center text-muted">
+            <i class="fa-solid fa-inbox fa-3x mb-3 text-secondary"></i>
+            <h5>No tickets found matching the criteria.</h5>
+            <p>Try clearing the filter or raise a new ticket.</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-custom mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Raised By</th>
+                        <th>Created Date</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold text-muted">#@item.Id</td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="text-white text-decoration-none fw-semibold">
+                                    @item.Title
+                                </a>
+                            </td>
+                            <td>
+                                @if (item.Priority == "High")
+                                {
+                                    <span class="badge-priority priority-high"><i class="fa-solid fa-arrow-up me-1"></i>High</span>
+                                }
+                                else if (item.Priority == "Medium")
+                                {
+                                    <span class="badge-priority priority-medium"><i class="fa-solid fa-equals me-1"></i>Medium</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-priority priority-low"><i class="fa-solid fa-arrow-down me-1"></i>Low</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.Status == "Open")
+                                {
+                                    <span class="badge-status badge-open">Open</span>
+                                }
+                                else if (item.Status == "In Progress")
+                                {
+                                    <span class="badge-status badge-inprogress">In Progress</span>
+                                }
+                                else
+                                {
+                                    <span class="badge-status badge-closed">Closed</span>
+                                }
+                            </td>
+                            <td>@item.RaisedBy</td>
+                            <td class="text-muted">@item.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td class="text-end">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info me-1" title="View Details">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning me-1" title="Edit Ticket">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger" title="Delete Ticket">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
