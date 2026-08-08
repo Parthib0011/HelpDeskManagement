@@ -1,0 +1,73 @@
+@model HelpDesk.Mvc.Models.TicketViewModel
+@{
+    ViewData["Title"] = "Ticket Details - #" + Model.Id;
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <a asp-action="Index" class="text-muted text-decoration-none mb-3 d-inline-block">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to Tickets List
+        </a>
+        <h2 class="fw-bold"><i class="fa-solid fa-file-lines me-2 text-primary"></i>Ticket Details #@Model.Id</h2>
+    </div>
+</div>
+
+<div class="glass-panel p-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h3 class="fw-bold text-white mb-2">@Model.Title</h3>
+            <p class="text-muted"><i class="fa-solid fa-user me-1 text-primary"></i>Raised by <strong>@Model.RaisedBy</strong> on @Model.CreatedDate.ToString("F")</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <div class="mb-2">
+                <span class="text-muted me-2">Status:</span>
+                @if (Model.Status == "Open")
+                {
+                    <span class="badge-status badge-open">Open</span>
+                }
+                else if (Model.Status == "In Progress")
+                {
+                    <span class="badge-status badge-inprogress">In Progress</span>
+                }
+                else
+                {
+                    <span class="badge-status badge-closed">Closed</span>
+                }
+            </div>
+            <div>
+                <span class="text-muted me-2">Priority:</span>
+                @if (Model.Priority == "High")
+                {
+                    <span class="badge-priority priority-high">High Priority</span>
+                }
+                else if (Model.Priority == "Medium")
+                {
+                    <span class="badge-priority priority-medium">Medium Priority</span>
+                }
+                else
+                {
+                    <span class="badge-priority priority-low">Low Priority</span>
+                }
+            </div>
+        </div>
+    </div>
+
+    <hr class="border-secondary mb-4" />
+
+    <div class="mb-4">
+        <h5 class="fw-semibold text-muted mb-2"><i class="fa-solid fa-align-left me-2 text-primary"></i>Description</h5>
+        <div class="p-3 rounded bg-dark border border-secondary text-white" style="white-space: pre-line;">
+            @Model.Description
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary-custom">
+            <i class="fa-solid fa-pen-to-square me-1"></i> Edit Ticket
+        </a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">
+            <i class="fa-solid fa-trash me-1"></i> Delete Ticket
+        </a>
+        <a asp-action="Index" class="btn btn-secondary-custom ms-auto">Back to List</a>
+    </div>
+</div>
