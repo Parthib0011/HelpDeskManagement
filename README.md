@@ -64,23 +64,7 @@ Help Desk Ticket Management System built using **ASP.NET Core Web API**, **ASP.N
 
 ---
 
-## 🖼️ User Interface Screenshots
 
-**User Profile Name:** Vidhi Udasi
-
-### Dashboard Overview
-![Dashboard UI](./docs/screenshots/dashboard-ui.png)
-*Figure 1: Dashboard UI displaying metrics cards (Total, Open, In Progress, Closed) for user Vidhi Udasi.*
-
-### Support Tickets Table and Status Filter
-![Ticket Index UI](./docs/screenshots/ticket-index-ui.png)
-*Figure 2: Support Tickets Data Table featuring Priority badges, Status badges, and Status Filter dropdown.*
-
-### Raise New Ticket Form
-![Raise Ticket Form UI](./docs/screenshots/raise-ticket-ui.png)
-*Figure 3: Raise Ticket form with prefilled user Vidhi Udasi, Priority dropdown, and hardcoded Open status.*
-
----
 
 ## 🧪 Automated Unit Testing Matrix (xUnit and Moq)
 
