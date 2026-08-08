@@ -1,0 +1,68 @@
+@model HelpDesk.Mvc.Models.TicketViewModel
+@{
+    ViewData["Title"] = "Raise New Ticket";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <a asp-action="Index" class="text-muted text-decoration-none mb-3 d-inline-block">
+            <i class="fa-solid fa-arrow-left me-1"></i> Back to Tickets List
+        </a>
+        <h2 class="fw-bold"><i class="fa-solid fa-circle-plus me-2 text-primary"></i>Raise New Support Ticket</h2>
+        <p class="text-muted">Fill in details to submit a new help desk ticket.</p>
+    </div>
+</div>
+
+<div class="glass-panel p-4 col-md-8 mx-auto">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <!-- Hidden/Readonly Status hardcoded to Open -->
+        <input type="hidden" asp-for="Status" value="Open" />
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label fw-semibold">Title *</label>
+            <input asp-for="Title" class="form-control" placeholder="e.g. Cannot connect to VPN" required />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="RaisedBy" class="form-label fw-semibold">Raised By (Your Name) *</label>
+            <input asp-for="RaisedBy" class="form-control" placeholder="e.g. Vidhi Udasi" required />
+            <span asp-validation-for="RaisedBy" class="text-danger"></span>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="Priority" class="form-label fw-semibold">Priority *</label>
+                <select asp-for="Priority" class="form-select" required>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+                <span asp-validation-for="Priority" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Initial Status</label>
+                <input type="text" class="form-control bg-dark text-info fw-bold" value="Open (Auto-assigned)" disabled />
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Description" class="form-label fw-semibold">Description *</label>
+            <textarea asp-for="Description" class="form-control" rows="5" placeholder="Provide detailed steps or context regarding your issue..." required></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary-custom">Cancel</a>
+            <button type="submit" class="btn btn-primary-custom">
+                <i class="fa-solid fa-paper-plane me-1"></i> Submit Ticket
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
